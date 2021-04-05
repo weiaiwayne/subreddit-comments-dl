@@ -123,7 +123,8 @@ def csv_reader(csv_path: str) -> Tuple[List[str], List[List[str]]]:
     header = None
     rows = []
     with open(csv_path, newline='', encoding="utf-8") as csv_file:
-        file_reader = csv.reader(csv_file, dialect="excel")
+        file_reader = csv.reader(x.replace('\0', '') for x in csv_file) # to fix the contain NUL error
+        #file_reader = csv.reader(csv_file, dialect="excel")
         for row_id, row in enumerate(file_reader):
             if row_id == 0:
                 header = row
